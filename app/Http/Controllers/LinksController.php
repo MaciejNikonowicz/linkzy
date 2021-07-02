@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LinkRequest;
 use App\Http\Resources\LinkResource;
+use App\Http\Resources\LinkStatisticsResource;
 use App\Models\Link;
+use App\Models\LinkStatistics;
+use Carbon\Carbon;
 use Hashids\Hashids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -70,9 +73,21 @@ class LinksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Link $link)
+    public function show(Request $request, Link $link)
     {
-        return new LinkResource($link);
+        if($link) {
+            $link_statistics = $link->statistics()->create([
+                'link_id' => $link->id,
+                'visit_date' => Carbon::now()->format('Y-m-d H:i:m'),
+                'visit_ip' => $request->ip(),
+                'visit_referer' => $request->headers->get('referer')
+            ]);
+
+            if ($link_statistics) {
+                $link->increment('visits_counter');
+            }
+        }
+        return new LinkStatisticsResource($link_statistics);
     }
 
     /**

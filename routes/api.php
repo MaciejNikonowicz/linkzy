@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LinksController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\LinkStatisticsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,4 +28,5 @@ Route::group([
     Route::get('/user-profile', [AuthController::class, 'userProfile']);    
 
     Route::apiResource('/links', LinksController::class);
+    Route::get('/links/{link_id}/statistics', [LinkStatisticsController::class, 'show'] );
 });

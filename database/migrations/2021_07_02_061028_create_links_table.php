@@ -19,6 +19,7 @@ class CreateLinksTable extends Migration
             $table->text('original_link');
             $table->string('short_link')->nullable();
             $table->string('slug')->nullable();
+            $table->integer('visits_counter')->default(0);
             $table->timestamps();
         });
     }

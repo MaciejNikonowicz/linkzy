@@ -9,10 +9,15 @@ class Link extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['original_link', 'short_link', 'slug'];
+    protected $fillable = ['original_link', 'short_link', 'slug', 'visits_counter'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function statistics()
+    {
+        return $this->hasMany(LinkStatistics::class);
     }
 }

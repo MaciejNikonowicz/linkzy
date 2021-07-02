@@ -16,10 +16,9 @@ class CreateLinkStatisticsTable extends Migration
         Schema::create('link_statistics', function (Blueprint $table) {
             $table->id();
             $table->foreignId('link_id')->constrained();
-            $table->date('visit_date');
-            $table->string('visit_ip');
-            $table->string('visit_referrer');
-            $table->integer('visits_counter')->default(0);
+            $table->dateTime('visit_date')->nullable();
+            $table->string('visit_ip')->nullable();
+            $table->string('visit_referer')->nullable();
             $table->timestamps();
         });
     }
