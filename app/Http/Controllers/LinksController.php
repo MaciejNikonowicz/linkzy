@@ -40,11 +40,19 @@ class LinksController extends Controller
     public function store(LinkRequest $request)
     {
         if($request->original_link) {
-            $link = Link::create([
-                'original_link'=> $request->original_link,
-                'slug' => $request->slug ?? Str::random(10),
-                'user_id' => auth()->user()->id,
-            ]);
+            if(auth()->user()) {
+                $link = auth()->user()->links()->create([
+                    'user_id' => auth('api')->user()->id,
+                    'original_link'=> $request->original_link,
+                    'slug' => $request->slug ?? Str::random(10),
+                ]);
+            } else {
+                $link = Link::create([
+                    'original_link'=> $request->original_link,
+                    'slug' => $request->slug ?? Str::random(10),
+                ]);
+            }
+            
             
             if($link) {
                 $link->update([
@@ -62,9 +70,9 @@ class LinksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Link $link)
     {
-        //
+        return new LinkResource($link);
     }
 
     /**

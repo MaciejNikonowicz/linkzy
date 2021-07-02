@@ -10,4 +10,9 @@ class Link extends Model
     use HasFactory;
 
     protected $fillable = ['original_link', 'short_link', 'slug'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -18,6 +18,7 @@ class LinkResource extends JsonResource
             'id' => (string)$this->id,
             'type' => 'Link',
             'attributes' => [
+                'user_id' => $this->user_id,
                 'original_link' => $this->original_link,
                 'short_link' => $this->short_link,
                 'slug' => $this->slug,
