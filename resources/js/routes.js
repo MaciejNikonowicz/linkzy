@@ -3,6 +3,7 @@ import NotFound from './components/NotFound';
 import Register from './components/Register';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import AddLink from './components/AddLink'
 
 export default {
     mode: 'history',
@@ -32,6 +33,11 @@ export default {
             path: '/dashboard',
             name: 'DashboardPage',
             component: Dashboard,
+        },
+        {
+            path: '/add-link',
+            name: 'AddLinkPage',
+            component: AddLink,
         }
     ]
 }

@@ -1,22 +1,26 @@
 <template>
    <div>
         Dashboard <br>
+        <hr>
         <div v-if="user">
-        
-        Name: {{user.name}} <br>
-        Email: {{user.email}}<br><br>
-        <button @click.prevent="logout">Logout</button>
+            <Links></Links>
+            <button @click.prevent="logout">Logout</button>
         </div>
 
     </div>
 </template>
 
 <script>
+import Links from './Links.vue'
+
 export default {
     data() {
         return {
             user: null
         }
+    },
+    components: {
+        Links
     },
     methods:{
         logout(){
