@@ -2,8 +2,8 @@
    <div>
         Dashboard <br>
         <hr>
+        <Links></Links>
         <div v-if="user">
-            <Links></Links>
             <button @click.prevent="logout">Logout</button>
         </div>
 
@@ -12,6 +12,8 @@
 
 <script>
 import Links from './Links.vue'
+import AddLink from './AddLink.vue'
+import axios from 'axios'
 
 export default {
     data() {
@@ -20,17 +22,29 @@ export default {
         }
     },
     components: {
-        Links
+        Links,
+        AddLink
     },
     methods:{
         logout(){
-            axios.post('/api/logout').then(()=>{
-                this.$router.push({ name: "HomePage"})
+            const config = {
+                headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+            };
+            const bodyParameters = {
+                key: ""
+            };
+            axios.post('/api/auth/logout', bodyParameters, config).then(()=>{
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('token_type');
+                localStorage.removeItem('user');
+                this.$router.push({ name: "LoginPage"})
+            }).catch((error) =>{
+                 console.log("ERRRR:: ",error.response.data);
             })
         }
     },
     mounted() {
-        axios.get('/api/user', {
+        axios.get('/api/auth/user-profile', {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('access_token')
             }

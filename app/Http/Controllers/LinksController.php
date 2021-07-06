@@ -21,7 +21,7 @@ class LinksController extends Controller
      */
     public function index()
     {
-        return LinkResource::collection(Link::all());
+        return Link::all();
     }
 
     /**

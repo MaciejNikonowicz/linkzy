@@ -1947,6 +1947,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Links_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Links.vue */ "./resources/js/components/Links.vue");
+/* harmony import */ var _AddLink_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddLink.vue */ "./resources/js/components/AddLink.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -1959,6 +1962,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -1967,23 +1972,38 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   components: {
-    Links: _Links_vue__WEBPACK_IMPORTED_MODULE_0__.default
+    Links: _Links_vue__WEBPACK_IMPORTED_MODULE_0__.default,
+    AddLink: _AddLink_vue__WEBPACK_IMPORTED_MODULE_1__.default
   },
   methods: {
     logout: function logout() {
       var _this = this;
 
-      axios.post('/api/logout').then(function () {
+      var config = {
+        headers: {
+          Authorization: "Bearer ".concat(localStorage.getItem('access_token'))
+        }
+      };
+      var bodyParameters = {
+        key: ""
+      };
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/auth/logout', bodyParameters, config).then(function () {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('token_type');
+        localStorage.removeItem('user');
+
         _this.$router.push({
-          name: "HomePage"
+          name: "LoginPage"
         });
+      })["catch"](function (error) {
+        console.log("ERRRR:: ", error.response.data);
       });
     }
   },
   mounted: function mounted() {
     var _this2 = this;
 
-    axios.get('/api/user', {
+    axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/auth/user-profile', {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }
@@ -2087,6 +2107,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2096,13 +2122,10 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/api/auth/links', {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('access_token')
-      }
-    }).then(function (res) {
-      _this.links = res.data.data;
-      console.log(_this.links);
+    axios.get('/api/auth/links').then(function (res) {
+      _this.links = res.data.filter(function (link) {
+        return link.user_id == localStorage.getItem('user');
+      });
     });
   }
 });
@@ -2122,6 +2145,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2147,6 +2172,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2168,8 +2194,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.post('/api/login', _this.form).then(function (res) {
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/auth/login', _this.form).then(function (res) {
                   localStorage.setItem('access_token', res.data.access_token);
+                  localStorage.setItem('token_type', res.data.token_type);
+                  localStorage.setItem('user', res.data.user.id);
 
                   _this.$router.push({
                     name: "DashboardPage"
@@ -2292,7 +2320,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.post('/api/register', _this.form).then(function () {
+                return axios.post('/api/auth/register', _this.form).then(function () {
                   _this.$router.push({
                     name: "LoginPage"
                   });
@@ -2403,7 +2431,7 @@ __webpack_require__.r(__webpack_exports__);
   }, {
     path: '/',
     name: 'HomePage',
-    component: _components_Home__WEBPACK_IMPORTED_MODULE_0__.default
+    component: _components_Dashboard__WEBPACK_IMPORTED_MODULE_4__.default
   }, {
     path: '/login',
     name: 'LoginPage',
@@ -21238,18 +21266,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._v("\n     Dashboard "),
-    _c("br"),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _vm.user
-      ? _c(
-          "div",
-          [
-            _c("Links"),
-            _vm._v(" "),
+  return _c(
+    "div",
+    [
+      _vm._v("\n     Dashboard "),
+      _c("br"),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("Links"),
+      _vm._v(" "),
+      _vm.user
+        ? _c("div", [
             _c(
               "button",
               {
@@ -21262,11 +21290,11 @@ var render = function() {
               },
               [_vm._v("Logout")]
             )
-          ],
-          1
-        )
-      : _vm._e()
-  ])
+          ])
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -21340,6 +21368,16 @@ var render = function() {
                 [
                   _c("thead", { staticClass: "bg-gray-50" }, [
                     _c("tr", [
+                      _c(
+                        "th",
+                        {
+                          staticClass:
+                            "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                          attrs: { scope: "col" }
+                        },
+                        [_vm._v("\n                    Id\n                ")]
+                      ),
+                      _vm._v(" "),
                       _c(
                         "th",
                         {
@@ -21437,6 +21475,18 @@ var render = function() {
                           "td",
                           { staticClass: "px-6 py-4 whitespace-nowrap" },
                           [
+                            _c(
+                              "div",
+                              { staticClass: "text-sm text-gray-500" },
+                              [_vm._v(_vm._s(link.id))]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          { staticClass: "px-6 py-4 whitespace-nowrap" },
+                          [
                             _c("div", { staticClass: "flex items-center" }, [
                               _c("div", { staticClass: "ml-4" }, [
                                 _c(
@@ -21448,7 +21498,7 @@ var render = function() {
                                   [
                                     _vm._v(
                                       "\n                                " +
-                                        _vm._s(link.attributes.original_link) +
+                                        _vm._s(link.original_link) +
                                         "\n                                "
                                     )
                                   ]
@@ -21465,7 +21515,7 @@ var render = function() {
                             _c(
                               "div",
                               { staticClass: "text-sm text-gray-500" },
-                              [_vm._v(_vm._s(link.attributes.slug))]
+                              [_vm._v(_vm._s(link.slug))]
                             )
                           ]
                         ),
@@ -21477,7 +21527,7 @@ var render = function() {
                             _c(
                               "div",
                               { staticClass: "text-sm text-gray-500" },
-                              [_vm._v(_vm._s(link.attributes.short_link))]
+                              [_vm._v(_vm._s(link.short_link))]
                             )
                           ]
                         ),
@@ -21491,7 +21541,7 @@ var render = function() {
                           [
                             _vm._v(
                               "\n                        " +
-                                _vm._s(link.attributes.visits_counter) +
+                                _vm._s(link.visits_counter) +
                                 "\n                    "
                             )
                           ]
@@ -21506,7 +21556,7 @@ var render = function() {
                           [
                             _vm._v(
                               "\n                        " +
-                                _vm._s(link.attributes.created_at) +
+                                _vm._s(link.created_at) +
                                 "\n                    "
                             )
                           ]

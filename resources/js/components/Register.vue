@@ -44,7 +44,7 @@ export default {
     },
     methods: {
         async saveForm() {
-            const response = await axios.post('/api/register', this.form).then(() => {
+            const response = await axios.post('/api/auth/register', this.form).then(() => {
                 this.$router.push({ name: "LoginPage"}); 
             }).catch((error) =>{
                 this.errors = error.response.data.errors;

@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     data() {
         return {
@@ -30,8 +32,10 @@ export default {
     },
     methods:{
         async loginUser(){
-            const response = await axios.post('/api/login', this.form).then((res) =>{
+            const response = await axios.post('/api/auth/login', this.form).then((res) =>{
                 localStorage.setItem('access_token', res.data.access_token);
+                localStorage.setItem('token_type', res.data.token_type);
+                localStorage.setItem('user', res.data.user.id);
                 this.$router.push({ name: "DashboardPage"}); 
              }).catch((error) =>{
                 this.errors = error.response.data.errors;

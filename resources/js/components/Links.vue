@@ -7,6 +7,9 @@
                 <thead class="bg-gray-50">
                     <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Id
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Original Link
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -29,25 +32,28 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr v-for="link in links" :key="link.id">
                         <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-500">{{link.id}}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">
-                                    {{link.attributes.original_link}}
+                                    {{link.original_link}}
                                     </div>
                                 </div>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500">{{link.attributes.slug}}</div>
+                            <div class="text-sm text-gray-500">{{link.slug}}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500">{{link.attributes.short_link}}</div>
+                            <div class="text-sm text-gray-500">{{link.short_link}}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {{link.attributes.visits_counter}}
+                            {{link.visits_counter}}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {{link.attributes.created_at}}
+                            {{link.created_at}}
                         </td>
                     </tr>
                 </tbody>
@@ -66,13 +72,8 @@ export default {
         }
     },
     mounted() {
-        axios.get('/api/auth/links', {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('access_token')
-            }
-        }).then((res) => {
-            this.links = res.data.data
-            console.log(this.links)
+        axios.get('/api/auth/links').then((res) => {
+            this.links = res.data.filter(link => link.user_id == localStorage.getItem('user'))
         })
     }
 }
