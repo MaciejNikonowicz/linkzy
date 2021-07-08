@@ -68,11 +68,11 @@
 export default {
     data() {
         return {
-           links: []
+           links: [],
         }
     },
     mounted() {
-        axios.get('/api/auth/links').then((res) => {
+        axios.get('/api/links/links').then((res) => {
             this.links = res.data.filter(link => link.user_id == localStorage.getItem('user'))
         })
     }

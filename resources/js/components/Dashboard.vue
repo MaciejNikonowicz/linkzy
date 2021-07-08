@@ -1,12 +1,7 @@
 <template>
    <div>
-        Dashboard <br>
-        <hr>
+        <h1 class="text-3xl text-center mb-2">Link Shortener</h1>
         <Links></Links>
-        <div v-if="user">
-            <button @click.prevent="logout">Logout</button>
-        </div>
-
     </div>
 </template>
 
@@ -25,22 +20,9 @@ export default {
         Links,
         AddLink
     },
-    methods:{
-        logout(){
-            const config = {
-                headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
-            };
-            const bodyParameters = {
-                key: ""
-            };
-            axios.post('/api/auth/logout', bodyParameters, config).then(()=>{
-                localStorage.removeItem('access_token');
-                localStorage.removeItem('token_type');
-                localStorage.removeItem('user');
-                this.$router.push({ name: "LoginPage"})
-            }).catch((error) =>{
-                 console.log("ERRRR:: ",error.response.data);
-            })
+    created() {
+        if (window.Laravel.user) {
+            this.user = window.Laravel.user
         }
     },
     mounted() {

@@ -31,16 +31,24 @@ export default {
         }
     },
     methods:{
-        async loginUser(){
-            const response = await axios.post('/api/auth/login', this.form).then((res) =>{
+        loginUser(){
+            axios.post('/api/login', this.form).then((res) =>{
                 localStorage.setItem('access_token', res.data.access_token);
                 localStorage.setItem('token_type', res.data.token_type);
                 localStorage.setItem('user', res.data.user.id);
+                this.$emit('logged', true);
+                this.$emit('user', res.data.user);
                 this.$router.push({ name: "DashboardPage"}); 
              }).catch((error) =>{
                 this.errors = error.response.data.errors;
             })
-         }
+         },
+         beforeRouteEnter(to, from, next) {
+            if (window.Laravel.isLoggedin) {
+                return next('DashboardPage');
+            }
+            next();
+        }
     }
 }
 </script>
