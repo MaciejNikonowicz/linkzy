@@ -13,6 +13,10 @@
             <div class="p-2 w-full mt-4">
                 <button @click.prevent="shortenLink" type="submit" class="flex text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Shorten</button>
             </div>
+            <div class="mt-6 border-solid border-4 border-light-blue-500 p-4" v-if="unregistered">
+                <p>Your shorten link is: <a class="text-2xl text-blue-800" :href="form.original_link">{{ short_link }}</a></p>
+                <p>You can use it for 48h - after then it's going to be deleted!</p>
+            </div>
         </div> 
     </div>
 </template>
@@ -25,18 +29,25 @@ export default {
                 original_link: '',
                 slug: ''
             },
-            errors: []
+            errors: [],
+            unregistered: false,
+            short_link: ''
         }
     },
     methods:{
-        async shortenLink(){
-            const response = await axios.post('/api/auth/links/', this.form, {
+        shortenLink(){
+            axios.post('/api/links/links/', this.form, {
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('access_token')
                 }
         }).then((res) =>{
-                console.log(res);
-                this.$router.push({ name: "DashboardPage"}); 
+            console.log(res);
+                if (localStorage.getItem('user')) {
+                    this.$router.push({ name: "DashboardPage"}); 
+                } else {
+                    this.unregistered = true;
+                    this.short_link = res.data.data.attributes.short_link
+                }
              }).catch((error) =>{
                  console.log("ERRRR:: ",error.response.data);
                 this.errors = error.response.data.errors;

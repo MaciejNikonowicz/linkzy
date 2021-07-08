@@ -18,21 +18,33 @@ export default {
             path: '/',
             name: 'HomePage',
             component: Home,
+            meta: {
+                hideForAuth: true
+            }
         },
         {
             path: '/login',
             name: 'LoginPage',
             component: Login,
+            meta: {
+                guest: true
+            }
         },
         {
             path: '/register',
             name: 'RegisterPage',
             component: Register,
-        },
+            meta: {
+                guest: true
+            }
+        }, 
         {
             path: '/dashboard',
             name: 'DashboardPage',
             component: Dashboard,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/add-link',

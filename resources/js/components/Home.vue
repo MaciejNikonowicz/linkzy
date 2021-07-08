@@ -1,12 +1,15 @@
 <template>
     <div class="text-2xl text-gray-800">
-        Homepage
+        <AddLink></AddLink>
     </div>
 </template>
 
 <script>
+import AddLink from './AddLink.vue'
 
 export default {
-
+    components: {
+        AddLink
+    }
 }
 </script>
