@@ -2070,7 +2070,8 @@ __webpack_require__.r(__webpack_exports__);
       },
       errors: [],
       unregistered: false,
-      short_link: ''
+      short_link: '',
+      user: null
     };
   },
   methods: {
@@ -2097,6 +2098,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.errors = error.response.data.errors;
       });
     }
+  },
+  created: function created() {
+    this.user = localStorage.getItem('user');
   }
 });
 
@@ -2693,17 +2697,56 @@ __webpack_require__.r(__webpack_exports__);
     path: '/dashboard',
     name: 'DashboardPage',
     component: _components_Dashboard__WEBPACK_IMPORTED_MODULE_4__.default,
+    beforeEnter: function beforeEnter(to, from, next) {
+      if (window.Laravel.isLoggedin) {
+        return next({
+          name: 'DashboardPage'
+        });
+      } else {
+        next({
+          path: '/login'
+        });
+      }
+    },
     meta: {
       requiresAuth: true
     }
   }, {
     path: '/add-link',
     name: 'AddLinkPage',
-    component: _components_AddLink__WEBPACK_IMPORTED_MODULE_5__.default
+    component: _components_AddLink__WEBPACK_IMPORTED_MODULE_5__.default,
+    beforeEnter: function beforeEnter(to, from, next) {
+      if (window.Laravel.isLoggedin) {
+        return next({
+          name: 'DashboardPage'
+        });
+      } else {
+        next({
+          path: '/login'
+        });
+      }
+    },
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/link/:id',
     name: 'LinkStatisticsPage',
-    component: _components_LinkStatistics__WEBPACK_IMPORTED_MODULE_6__.default
+    component: _components_LinkStatistics__WEBPACK_IMPORTED_MODULE_6__.default,
+    beforeEnter: function beforeEnter(to, from, next) {
+      if (window.Laravel.isLoggedin) {
+        return next({
+          name: 'DashboardPage'
+        });
+      } else {
+        next({
+          path: '/login'
+        });
+      }
+    },
+    meta: {
+      requiresAuth: true
+    }
   }]
 });
 
@@ -51975,15 +52018,17 @@ var render = function() {
           "div",
           { staticClass: "p-2 w-full mt-4" },
           [
-            _c(
-              "router-link",
-              {
-                staticClass:
-                  "btn bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow",
-                attrs: { to: { name: "DashboardPage" } }
-              },
-              [_vm._v("Back")]
-            )
+            _vm.user
+              ? _c(
+                  "router-link",
+                  {
+                    staticClass:
+                      "btn bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow",
+                    attrs: { to: { name: "DashboardPage" } }
+                  },
+                  [_vm._v("Back")]
+                )
+              : _vm._e()
           ],
           1
         ),

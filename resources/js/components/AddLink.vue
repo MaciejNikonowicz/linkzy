@@ -2,7 +2,7 @@
     <div class="flex flex-wrap w-full justify-center items-center pt-56">
         <div class="flex flex-wrap max-w-xl">
             <div class="p-2 w-full mt-4">
-                <router-link :to="{name: 'DashboardPage'}" class="btn bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">Back</router-link>
+                <router-link v-if="user" :to="{name: 'DashboardPage'}" class="btn bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">Back</router-link>
             </div>
             <div class="p-2 text-2xl text-gray-800 font-semibold"><h1>Shorten Link</h1></div>
             <div class="p-2 w-full">
@@ -34,7 +34,8 @@ export default {
             },
             errors: [],
             unregistered: false,
-            short_link: ''
+            short_link: '',
+            user: null
         }
     },
     methods:{
@@ -56,6 +57,9 @@ export default {
                 this.errors = error.response.data.errors;
             })
          }
+    },
+    created() {
+        this.user = localStorage.getItem('user')
     }
 }
 </script>
