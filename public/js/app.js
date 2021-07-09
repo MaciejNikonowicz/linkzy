@@ -1971,6 +1971,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "App",
   data: function data() {
@@ -2034,6 +2035,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
 //
 //
 //
@@ -2374,7 +2378,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     timeFormat: function timeFormat(time) {
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()(time).format('MM/DD/YYYY hh:mm');
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(time).format('YYYY-MM-DD hh:mm');
     }
   },
   mounted: function mounted() {
@@ -51860,20 +51864,29 @@ var render = function() {
   return _c("div", [
     _c(
       "div",
-      { staticClass: "flex bg-gray-100 border-b border-gray-300 py-4" },
+      { staticClass: "flex bg-gray-100 border-b border-gray-300 py-4 mb-5" },
       [
         _c(
           "div",
-          { staticClass: "container mx-auto " },
+          { staticClass: "container mx-auto" },
           [
-            _c(
-              "router-link",
-              {
-                staticClass: "mr-4",
-                attrs: { to: { name: "HomePage" }, exact: "" }
-              },
-              [_vm._v("Home")]
-            )
+            !_vm.isLoggedIn
+              ? _c(
+                  "router-link",
+                  {
+                    staticClass: "mr-4",
+                    attrs: { to: { name: "HomePage" }, exact: "" }
+                  },
+                  [_vm._v("Home")]
+                )
+              : _c(
+                  "router-link",
+                  {
+                    staticClass: "mr-4",
+                    attrs: { to: { name: "DashboardPage" }, exact: "" }
+                  },
+                  [_vm._v("Home")]
+                )
           ],
           1
         ),
@@ -51958,6 +51971,23 @@ var render = function() {
     { staticClass: "flex flex-wrap w-full justify-center items-center pt-56" },
     [
       _c("div", { staticClass: "flex flex-wrap max-w-xl" }, [
+        _c(
+          "div",
+          { staticClass: "p-2 w-full mt-4" },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass:
+                  "btn bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow",
+                attrs: { to: { name: "DashboardPage" } }
+              },
+              [_vm._v("Back")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "p-2 w-full" }, [
@@ -52101,7 +52131,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h1", { staticClass: "text-3xl text-center mb-2" }, [
+      _c("h1", { staticClass: "text-3xl text-center mb-5" }, [
         _vm._v("Link Shortener")
       ]),
       _vm._v(" "),
@@ -52189,7 +52219,7 @@ var render = function() {
                         "th",
                         {
                           staticClass:
-                            "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                           attrs: { scope: "col" }
                         },
                         [_vm._v("\n                    Id\n                ")]
@@ -52199,7 +52229,7 @@ var render = function() {
                         "th",
                         {
                           staticClass:
-                            "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                           attrs: { scope: "col" }
                         },
                         [
@@ -52213,7 +52243,7 @@ var render = function() {
                         "th",
                         {
                           staticClass:
-                            "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                           attrs: { scope: "col" }
                         },
                         [
@@ -52227,7 +52257,7 @@ var render = function() {
                         "th",
                         {
                           staticClass:
-                            "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                           attrs: { scope: "col" }
                         },
                         [
@@ -52241,7 +52271,7 @@ var render = function() {
                         "th",
                         {
                           staticClass:
-                            "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                           attrs: { scope: "col" }
                         },
                         [
@@ -52254,7 +52284,7 @@ var render = function() {
                       _c(
                         "th",
                         {
-                          staticClass: "relative px-6 py-3",
+                          staticClass: "relative px-6 py-5",
                           attrs: { scope: "col" }
                         },
                         [
@@ -52262,7 +52292,7 @@ var render = function() {
                             "router-link",
                             {
                               staticClass:
-                                "text-indigo-600 hover:text-indigo-900",
+                                "btn bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow",
                               attrs: { to: { name: "DashboardPage" } }
                             },
                             [_vm._v("Back")]
@@ -52280,7 +52310,7 @@ var render = function() {
                       return _c("tr", { key: stat.id }, [
                         _c(
                           "td",
-                          { staticClass: "px-6 py-4 whitespace-nowrap" },
+                          { staticClass: "px-6 py-5 whitespace-nowrap" },
                           [
                             _c(
                               "div",
@@ -52292,7 +52322,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "td",
-                          { staticClass: "px-6 py-4 whitespace-nowrap" },
+                          { staticClass: "px-6 py-5 whitespace-nowrap" },
                           [
                             _c("div", { staticClass: "flex items-center" }, [
                               _c("div", { staticClass: "ml-4" }, [
@@ -52317,7 +52347,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "td",
-                          { staticClass: "px-6 py-4 whitespace-nowrap" },
+                          { staticClass: "px-6 py-5 whitespace-nowrap" },
                           [
                             _c(
                               "div",
@@ -52329,7 +52359,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "td",
-                          { staticClass: "px-6 py-4 whitespace-nowrap" },
+                          { staticClass: "px-6 py-5 whitespace-nowrap" },
                           [
                             _c(
                               "div",
@@ -52349,7 +52379,7 @@ var render = function() {
                           "td",
                           {
                             staticClass:
-                              "px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                              "px-6 py-5 whitespace-nowrap text-sm text-gray-500"
                           },
                           [
                             _vm._v(
@@ -52421,7 +52451,7 @@ var render = function() {
                         "th",
                         {
                           staticClass:
-                            "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                           attrs: { scope: "col" }
                         },
                         [_vm._v("\n                    Id\n                ")]
@@ -52431,7 +52461,7 @@ var render = function() {
                         "th",
                         {
                           staticClass:
-                            "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                           attrs: { scope: "col" }
                         },
                         [
@@ -52445,7 +52475,7 @@ var render = function() {
                         "th",
                         {
                           staticClass:
-                            "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                           attrs: { scope: "col" }
                         },
                         [_vm._v("\n                    Slug\n                ")]
@@ -52455,7 +52485,7 @@ var render = function() {
                         "th",
                         {
                           staticClass:
-                            "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                           attrs: { scope: "col" }
                         },
                         [
@@ -52469,7 +52499,7 @@ var render = function() {
                         "th",
                         {
                           staticClass:
-                            "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                           attrs: { scope: "col" }
                         },
                         [
@@ -52483,7 +52513,7 @@ var render = function() {
                         "th",
                         {
                           staticClass:
-                            "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                           attrs: { scope: "col" }
                         },
                         [
@@ -52496,7 +52526,7 @@ var render = function() {
                       _c(
                         "th",
                         {
-                          staticClass: "relative px-6 py-3",
+                          staticClass: "relative px-6 py-5",
                           attrs: { scope: "col" }
                         },
                         [
@@ -52522,7 +52552,7 @@ var render = function() {
                       return _c("tr", { key: link.id }, [
                         _c(
                           "td",
-                          { staticClass: "px-6 py-4 whitespace-nowrap" },
+                          { staticClass: "px-6 py-5 whitespace-nowrap" },
                           [
                             _c(
                               "div",
@@ -52534,7 +52564,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "td",
-                          { staticClass: "px-6 py-4 whitespace-nowrap" },
+                          { staticClass: "px-6 py-5 whitespace-nowrap" },
                           [
                             _c("div", { staticClass: "flex items-center" }, [
                               _c("div", { staticClass: "ml-4" }, [
@@ -52566,7 +52596,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "td",
-                          { staticClass: "px-6 py-4 whitespace-nowrap" },
+                          { staticClass: "px-6 py-5 whitespace-nowrap" },
                           [
                             _c(
                               "div",
@@ -52578,7 +52608,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "td",
-                          { staticClass: "px-6 py-4 whitespace-nowrap" },
+                          { staticClass: "px-6 py-5 whitespace-nowrap" },
                           [
                             _c(
                               "div",
@@ -52608,7 +52638,7 @@ var render = function() {
                           "td",
                           {
                             staticClass:
-                              "px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                              "px-6 py-5 whitespace-nowrap text-sm text-gray-500"
                           },
                           [
                             _vm._v(
@@ -52623,7 +52653,7 @@ var render = function() {
                           "td",
                           {
                             staticClass:
-                              "px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                              "px-6 py-5 whitespace-nowrap text-sm text-gray-500"
                           },
                           [
                             _vm._v(
@@ -52638,7 +52668,7 @@ var render = function() {
                           "td",
                           {
                             staticClass:
-                              "px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                              "px-6 py-5 whitespace-nowrap text-sm text-gray-500"
                           },
                           [
                             _c(

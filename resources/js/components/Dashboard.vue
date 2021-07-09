@@ -1,6 +1,6 @@
 <template>
    <div>
-        <h1 class="text-3xl text-center mb-2">Link Shortener</h1>
+        <h1 class="text-3xl text-center mb-5">Link Shortener</h1>
         <Links></Links>
     </div>
 </template>
