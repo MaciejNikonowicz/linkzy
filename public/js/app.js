@@ -52617,6 +52617,8 @@ var render = function() {
                                 _c(
                                   "a",
                                   {
+                                    staticClass:
+                                      "text-blue-500 hover:text-red-500",
                                     attrs: {
                                       href: link.original_link,
                                       target: "_blank"
