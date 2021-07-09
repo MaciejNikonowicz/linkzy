@@ -2457,6 +2457,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2485,7 +2488,7 @@ __webpack_require__.r(__webpack_exports__);
           name: "DashboardPage"
         });
       })["catch"](function (error) {
-        _this.errors = error.response.data.errors;
+        _this.errors = error.response.data;
       });
     },
     beforeRouteEnter: function beforeRouteEnter(to, from, next) {
@@ -2588,7 +2591,7 @@ __webpack_require__.r(__webpack_exports__);
           name: "LoginPage"
         });
       })["catch"](function (error) {
-        _this.errors = error.response.data.errors;
+        _this.errors = error.response.data;
       });
     },
     beforeRouteEnter: function beforeRouteEnter(to, from, next) {
@@ -52651,7 +52654,7 @@ var render = function() {
                                     staticClass:
                                       "text-blue-500 hover:text-red-500",
                                     attrs: {
-                                      href: link.original_link,
+                                      href: link.short_link,
                                       target: "_blank"
                                     },
                                     on: {
@@ -52768,6 +52771,18 @@ var render = function() {
         _c("div", { staticClass: "p-2 w-full" }, [
           _c("label", { attrs: { for: "email" } }, [_vm._v("Your e-mail")]),
           _vm._v(" "),
+          _vm.errors.email
+            ? _c("span", { staticClass: "w-full text-red-500" }, [
+                _vm._v(_vm._s(_vm.errors.email[0]))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.errors.error
+            ? _c("span", { staticClass: "w-full text-red-500" }, [
+                _vm._v("Bad credentials (email/password)")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("input", {
             directives: [
               {
@@ -52794,6 +52809,12 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "p-2 w-full" }, [
           _c("label", { attrs: { for: "password" } }, [_vm._v("Password")]),
+          _vm._v(" "),
+          _vm.errors.password
+            ? _c("span", { staticClass: "w-full text-red-500" }, [
+                _vm._v(_vm._s(_vm.errors.password[0]))
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [

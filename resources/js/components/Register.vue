@@ -47,7 +47,7 @@ export default {
             axios.post('/api/register', this.form).then(() => {
                 this.$router.push({ name: "LoginPage"}); 
             }).catch((error) =>{
-                this.errors = error.response.data.errors;
+                this.errors = error.response.data;
             })
         },
         beforeRouteEnter(to, from, next) {

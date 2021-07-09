@@ -49,7 +49,7 @@
                         </td>
                         <td class="px-6 py-5 whitespace-nowrap">
                             <div class="text-sm text-gray-500">
-                                <a @click="linkEnter(link.id)" :href="link.original_link" target="_blank" class="text-blue-500 hover:text-red-500">{{link.short_link}}</a>
+                                <a @click="linkEnter(link.id)" :href="link.short_link" target="_blank" class="text-blue-500 hover:text-red-500">{{link.short_link}}</a>
                             </div>
                         </td>
                         <td class="px-6 py-5 whitespace-nowrap text-sm text-gray-500">
