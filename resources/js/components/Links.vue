@@ -82,7 +82,7 @@ export default {
     methods: {
         linkEnter(id) {
             axios.get('/api/links/' + id).then((res) => {
-                console.log(res);
+                window.location.reload();
             })
         },
         timeFormat(time) {

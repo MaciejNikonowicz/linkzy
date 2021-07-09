@@ -2370,7 +2370,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     linkEnter: function linkEnter(id) {
       axios.get('/api/links/' + id).then(function (res) {
-        console.log(res);
+        window.location.reload();
       });
     },
     timeFormat: function timeFormat(time) {
@@ -52335,15 +52335,10 @@ var render = function() {
                               "div",
                               { staticClass: "text-sm text-gray-500" },
                               [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href: stat.visit_referer,
-                                      target: "_blank"
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(stat.visit_referer))]
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(stat.visit_referer) +
+                                    "\n                        "
                                 )
                               ]
                             )

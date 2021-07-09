@@ -46,7 +46,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-500">
-                                <a :href="stat.visit_referer" target="_blank">{{stat.visit_referer}}</a>
+                                {{stat.visit_referer}}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
