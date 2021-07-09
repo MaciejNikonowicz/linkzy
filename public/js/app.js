@@ -2062,6 +2062,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    isLoggedIn: Boolean
+  },
   data: function data() {
     return {
       form: {
@@ -2100,6 +2103,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
+    if (!this.isLoggedIn) {
+      this.$router.push({
+        path: "/login"
+      });
+    }
+
     this.user = localStorage.getItem('user');
   }
 });
@@ -2132,6 +2141,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    isLoggedIn: Boolean
+  },
   data: function data() {
     return {
       user: null
@@ -2142,6 +2154,12 @@ __webpack_require__.r(__webpack_exports__);
     AddLink: _AddLink_vue__WEBPACK_IMPORTED_MODULE_1__.default
   },
   created: function created() {
+    if (!this.isLoggedIn) {
+      this.$router.push({
+        path: "/login"
+      });
+    }
+
     if (window.Laravel.user) {
       this.user = window.Laravel.user;
     }
@@ -2263,6 +2281,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    isLoggedIn: Boolean
+  },
   data: function data() {
     return {
       link_stats: [],
@@ -2270,6 +2291,12 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
+    if (!this.isLoggedIn) {
+      this.$router.push({
+        path: "/login"
+      });
+    }
+
     this.id = this.$route.params.id;
   },
   mounted: function mounted() {
@@ -2696,57 +2723,15 @@ __webpack_require__.r(__webpack_exports__);
   }, {
     path: '/dashboard',
     name: 'DashboardPage',
-    component: _components_Dashboard__WEBPACK_IMPORTED_MODULE_4__.default,
-    beforeEnter: function beforeEnter(to, from, next) {
-      if (window.Laravel.isLoggedin) {
-        return next({
-          name: 'DashboardPage'
-        });
-      } else {
-        next({
-          path: '/login'
-        });
-      }
-    },
-    meta: {
-      requiresAuth: true
-    }
+    component: _components_Dashboard__WEBPACK_IMPORTED_MODULE_4__.default
   }, {
     path: '/add-link',
     name: 'AddLinkPage',
-    component: _components_AddLink__WEBPACK_IMPORTED_MODULE_5__.default,
-    beforeEnter: function beforeEnter(to, from, next) {
-      if (window.Laravel.isLoggedin) {
-        return next({
-          name: 'DashboardPage'
-        });
-      } else {
-        next({
-          path: '/login'
-        });
-      }
-    },
-    meta: {
-      requiresAuth: true
-    }
+    component: _components_AddLink__WEBPACK_IMPORTED_MODULE_5__.default
   }, {
     path: '/link/:id',
     name: 'LinkStatisticsPage',
-    component: _components_LinkStatistics__WEBPACK_IMPORTED_MODULE_6__.default,
-    beforeEnter: function beforeEnter(to, from, next) {
-      if (window.Laravel.isLoggedin) {
-        return next({
-          name: 'DashboardPage'
-        });
-      } else {
-        next({
-          path: '/login'
-        });
-      }
-    },
-    meta: {
-      requiresAuth: true
-    }
+    component: _components_LinkStatistics__WEBPACK_IMPORTED_MODULE_6__.default
   }]
 });
 
@@ -51979,6 +51964,7 @@ var render = function() {
       { staticClass: "container mx-auto py-2" },
       [
         _c("router-view", {
+          attrs: { isLoggedIn: _vm.isLoggedIn },
           on: { logged: _vm.checkIfLogged, user: _vm.setUser }
         })
       ],

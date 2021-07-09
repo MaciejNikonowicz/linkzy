@@ -42,47 +42,17 @@ export default {
         {
             path: '/dashboard',
             name: 'DashboardPage',
-            component: Dashboard,
-            beforeEnter(to, from, next) {
-                if (window.Laravel.isLoggedin) {
-                    return next({name: 'DashboardPage'});
-                } else {
-                    next({path: '/login'});
-                }
-            },
-            meta: {
-                requiresAuth: true
-            }
+            component: Dashboard
         },
         {
             path: '/add-link',
             name: 'AddLinkPage',
-            component: AddLink,
-            beforeEnter(to, from, next) {
-                if (window.Laravel.isLoggedin) {
-                    return next({name: 'DashboardPage'});
-                } else {
-                    next({path: '/login'});
-                }
-            },
-            meta: {
-                requiresAuth: true
-            }
+            component: AddLink
         },
         {
             path: '/link/:id',
             name: 'LinkStatisticsPage',
-            component: LinkStatistics,
-            beforeEnter(to, from, next) {
-                if (window.Laravel.isLoggedin) {
-                    return next({name: 'DashboardPage'});
-                } else {
-                    next({path: '/login'});
-                }
-            },
-            meta: {
-                requiresAuth: true
-            }
+            component: LinkStatistics
         }
     ]
 }

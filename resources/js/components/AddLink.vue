@@ -26,6 +26,9 @@
 
 <script>
 export default {
+    props: {
+        isLoggedIn: Boolean
+    },
     data() {
         return {
             form: {
@@ -59,6 +62,9 @@ export default {
          }
     },
     created() {
+        if (!this.isLoggedIn) {
+            this.$router.push({ path: "/login"}); 
+        }
         this.user = localStorage.getItem('user')
     }
 }

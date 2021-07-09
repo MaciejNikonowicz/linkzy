@@ -11,6 +11,9 @@ import AddLink from './AddLink.vue'
 import axios from 'axios'
 
 export default {
+    props: {
+        isLoggedIn: Boolean
+    },
     data() {
         return {
             user: null
@@ -21,11 +24,15 @@ export default {
         AddLink
     },
     created() {
+        if (!this.isLoggedIn) {
+            this.$router.push({ path: "/login"}); 
+        }
         if (window.Laravel.user) {
             this.user = window.Laravel.user
         }
     },
     mounted() {
+
         axios.get('/api/auth/user-profile', {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('access_token')

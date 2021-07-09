@@ -63,6 +63,9 @@
 
 <script>
 export default {
+    props: {
+        isLoggedIn: Boolean
+    },
     data() {
         return {
             link_stats: [],
@@ -70,6 +73,9 @@ export default {
         }
     },
     created() {
+        if (!this.isLoggedIn) {
+            this.$router.push({ path: "/login"}); 
+        }
         this.id = this.$route.params.id;
     },
     mounted() {

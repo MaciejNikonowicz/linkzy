@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="container mx-auto py-2">
-            <router-view @logged="checkIfLogged" @user="setUser"></router-view>
+            <router-view @logged="checkIfLogged" @user="setUser" :isLoggedIn="isLoggedIn"></router-view>
         </div>
     </div>
 </template>
