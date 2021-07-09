@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RedirectsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/l/{slug}', [RedirectsController::class, 'redirectToOriginalLink']);
+Route::get('404', function() {
+    return view('404');
+});
 
 Route::get('/{any}', function () {
     return view('app');

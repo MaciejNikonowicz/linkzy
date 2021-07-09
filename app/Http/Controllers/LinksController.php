@@ -61,7 +61,7 @@ class LinksController extends Controller
             
             if($link) {
                 $link->update([
-                    'short_link' => url($link->slug),
+                    'short_link' => url('l/' . $link->slug),
                 ]);
             }
 
@@ -82,7 +82,7 @@ class LinksController extends Controller
                 'link_id' => $link->id,
                 'visit_date' => Carbon::now()->format('Y-m-d H:i:m'),
                 'visit_ip' => $request->ip(),
-                'visit_referer' => $request->headers->get('referer')
+                'visit_referer' => $request->headers->get('referer') ?? 'No referer'
             ]);
 
             if ($link_statistics) {
