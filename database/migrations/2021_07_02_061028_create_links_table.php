@@ -19,7 +19,8 @@ class CreateLinksTable extends Migration
             $table->text('original_link');
             $table->string('short_link')->nullable();
             $table->string('slug')->nullable();
-            $table->dateTime('visit_date')->nullable();
+            $table->dateTime('expiration_date')->nullable();
+            $table->boolean('is_valid')->default(true);
             $table->integer('visits_counter')->default(0);
             $table->timestamps();
         });

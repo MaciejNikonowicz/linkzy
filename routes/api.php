@@ -36,7 +36,6 @@ Route::group([
 
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'links'
 ], function($router) {
     Route::apiResource('/links', LinksController::class);
     Route::get('/links/{link_id}/statistics', [LinkStatisticsController::class, 'show'] );

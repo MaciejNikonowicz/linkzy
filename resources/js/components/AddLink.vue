@@ -36,7 +36,7 @@ export default {
     },
     methods:{
         shortenLink(){
-            axios.post('/api/links/links/', this.form, {
+            axios.post('/api/links/', this.form, {
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('access_token')
                 }

@@ -23,6 +23,8 @@ class LinkResource extends JsonResource
                 'short_link' => $this->short_link,
                 'slug' => $this->slug,
                 'visits_counter' => $this->visits_counter,
+                'expiration_date' => $this->expiration_date,
+                'is_valid' => $this->is_valid,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
             ]

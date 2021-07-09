@@ -3,7 +3,8 @@ import NotFound from './components/NotFound';
 import Register from './components/Register';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
-import AddLink from './components/AddLink'
+import AddLink from './components/AddLink';
+import LinkStatistics from './components/LinkStatistics';
 
 export default {
     mode: 'history',
@@ -50,6 +51,11 @@ export default {
             path: '/add-link',
             name: 'AddLinkPage',
             component: AddLink,
+        },
+        {
+            path: '/link/:id',
+            name: 'LinkStatisticsPage',
+            component: LinkStatistics,
         }
     ]
 }

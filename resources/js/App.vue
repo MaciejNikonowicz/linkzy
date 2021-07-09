@@ -5,8 +5,8 @@
                 <router-link class="mr-4" :to="{ name: 'HomePage' }" exact>Home</router-link>
             </div>
             <div class="flex mx-auto" v-if="isLoggedIn">
-                <p class="mr-3">Logged as: <b>{{ user.name }}</b></p>
-                <a class="nav-item nav-link" style="cursor: pointer;" @click="logout">Logout</a>
+                <p class="mr-5 text-2xl">Logged as: <b>{{ user.name }}</b></p>
+                <a class="nav-item nav-link btn bg-red-800 hover:bg-red-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow" style="cursor: pointer;" @click="logout">Logout</a>
             </div>
             <div class="flex mx-auto" v-else>
                 <router-link class="mr-4" :to="{name: 'LoginPage'}" exact>Login</router-link>

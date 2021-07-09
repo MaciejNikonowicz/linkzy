@@ -48,11 +48,13 @@ class LinksController extends Controller
                     'user_id' => auth('api')->user()->id,
                     'original_link'=> $request->original_link,
                     'slug' => $request->slug ?? Str::random(10),
+                    'expiration_date' => Carbon::now()->addDays(30)->format('Y-m-d H:i:m')
                 ]);
             } else {
                 $link = Link::create([
                     'original_link'=> $request->original_link,
                     'slug' => $request->slug ?? Str::random(10),
+                    'expiration_date' => Carbon::now()->addHours(48)->format('Y-m-d H:i:m')
                 ]);
             }
             
