@@ -84,10 +84,6 @@ class LinksController extends Controller
                 'visit_ip' => $request->ip(),
                 'visit_referer' => $request->headers->get('referer') ?? 'No referer'
             ]);
-
-            if ($link_statistics) {
-                $link->increment('visits_counter');
-            }
         }
         return new LinkStatisticsResource($link_statistics);
     }
