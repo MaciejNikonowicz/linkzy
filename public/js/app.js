@@ -2101,15 +2101,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.errors = error.response.data.errors;
       });
     }
-  },
-  created: function created() {
-    if (!this.isLoggedIn) {
-      this.$router.push({
-        path: "/login"
-      });
-    }
-
-    this.user = localStorage.getItem('user');
   }
 });
 
@@ -51907,7 +51898,7 @@ var render = function() {
                     staticClass: "mr-4",
                     attrs: { to: { name: "HomePage" }, exact: "" }
                   },
-                  [_vm._v("Home")]
+                  [_vm._v("Home " + _vm._s(_vm.isLoggedIn))]
                 )
               : _c(
                   "router-link",
@@ -52006,7 +51997,7 @@ var render = function() {
           "div",
           { staticClass: "p-2 w-full mt-4" },
           [
-            _vm.user
+            this.isLoggedIn
               ? _c(
                   "router-link",
                   {

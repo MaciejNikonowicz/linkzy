@@ -2,7 +2,7 @@
     <div>
         <div class="flex bg-gray-100 border-b border-gray-300 py-4 mb-5">
             <div class="container mx-auto">
-                <router-link v-if="!isLoggedIn" class="mr-4" :to="{ name: 'HomePage' }" exact>Home</router-link>
+                <router-link v-if="!isLoggedIn" class="mr-4" :to="{ name: 'HomePage' }" exact>Home {{ isLoggedIn }}</router-link>
                 <router-link v-else class="mr-4" :to="{ name: 'DashboardPage' }" exact>Home</router-link>
             </div>
             <div class="flex mx-auto" v-if="isLoggedIn">
