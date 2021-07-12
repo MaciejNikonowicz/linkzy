@@ -33,13 +33,15 @@ export default {
     },
     mounted() {
 
-        axios.get('/api/auth/user-profile', {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('access_token')
-            }
-        }).then((res) => {
-            this.user = res.data
-        })
+        /**  !! This should be moved to user-profile once created !! **/ 
+
+        // axios.get('/api/auth/user-profile', {
+        //     headers: {
+        //         Authorization: 'Bearer ' + localStorage.getItem('access_token')
+        //     }
+        // }).then((res) => {
+        //     this.user = res.data
+        // })
     }
 }
 </script>

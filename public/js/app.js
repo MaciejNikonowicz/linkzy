@@ -2165,15 +2165,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    var _this = this;
-
-    axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/auth/user-profile', {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('access_token')
-      }
-    }).then(function (res) {
-      _this.user = res.data;
-    });
+    /**  !! This should be moved to user-profile once created !! **/
+    // axios.get('/api/auth/user-profile', {
+    //     headers: {
+    //         Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    //     }
+    // }).then((res) => {
+    //     this.user = res.data
+    // })
   }
 });
 
