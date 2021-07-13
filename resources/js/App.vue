@@ -44,7 +44,7 @@ export default {
         }
     },
     beforeUpdate() {
-        if(moment(new Date()).format('MMMM Do YYYY, h:mm:ss') > localStorage.getItem('expires_in')) {
+        if(moment(new Date()).format('MMMM Do YYYY, HH:mm:ss') > localStorage.getItem('expires_in')) {
             localStorage.clear();
             this.isLoggedIn = false;
             this.user = null;
