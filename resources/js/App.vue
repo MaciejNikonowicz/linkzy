@@ -15,6 +15,7 @@
             </div>
         </div>
         <div class="container mx-auto py-2">
+            <div v-if="loggedOut" class="text-3xl text-red-500 text-bold text-center">Session expired. You've been logged out.</div>
             <router-view @logged="checkIfLogged" @user="setUser" :isLoggedIn="isLoggedIn"></router-view>
         </div>
     </div>
@@ -22,13 +23,15 @@
 
 <script>
 import axios from './axios';
+import moment from 'moment'
 
 export default {
     name: "App",
     data() {
         return {
             isLoggedIn: false,
-            user: null
+            user: null,
+            loggedOut: false
         }
     },
     created() {
@@ -38,6 +41,14 @@ export default {
         } else {
             this.isLoggedIn = false
             this.user = null
+        }
+    },
+    beforeUpdate() {
+        if(moment(new Date()).format('MMMM Do YYYY, h:mm:ss') > localStorage.getItem('expires_in')) {
+            localStorage.clear();
+            this.isLoggedIn = false;
+            this.user = null;
+            this.loggedOut = true;
         }
     },
     methods: {

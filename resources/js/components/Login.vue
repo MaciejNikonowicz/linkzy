@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-wrap w-full justify-center items-center pt-56">
+    <div class="flex flex-wrap w-full justify-center items-center pt-10">
         <div class="flex flex-wrap max-w-xl">
             <div class="p-2 text-2xl text-gray-800 font-semibold"><h1>Login to your account</h1></div>
             <div class="p-2 w-full">
@@ -22,6 +22,7 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
     data() {
@@ -37,6 +38,7 @@ export default {
         loginUser(){
             axios.post('/api/login', this.form).then((res) =>{
                 localStorage.setItem('access_token', res.data.access_token);
+                localStorage.setItem('expires_in', moment(new Date()).add(4, 'hours').format('MMMM Do YYYY, h:mm:ss'));
                 localStorage.setItem('token_type', res.data.token_type);
                 localStorage.setItem('user', res.data.user.id);
                 this.$emit('logged', true);
@@ -44,7 +46,7 @@ export default {
                 this.$router.push({ name: "DashboardPage"}); 
                 window.location.reload();
             }).catch((error) =>{
-                 console.log("ERRRR:: ",error.response.data);
+                console.log("ERRRR:: ",error.response.data);
                 this.errors = error.response.data;
             })
          }

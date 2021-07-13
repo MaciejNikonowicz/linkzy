@@ -1951,6 +1951,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./axios */ "./resources/js/axios.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+//
 //
 //
 //
@@ -1974,12 +1977,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "App",
   data: function data() {
     return {
       isLoggedIn: false,
-      user: null
+      user: null,
+      loggedOut: false
     };
   },
   created: function created() {
@@ -1989,6 +1994,14 @@ __webpack_require__.r(__webpack_exports__);
     } else {
       this.isLoggedIn = false;
       this.user = null;
+    }
+  },
+  beforeUpdate: function beforeUpdate() {
+    if (moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date()).format('MMMM Do YYYY, h:mm:ss') > localStorage.getItem('expires_in')) {
+      localStorage.clear();
+      this.isLoggedIn = false;
+      this.user = null;
+      this.loggedOut = true;
     }
   },
   methods: {
@@ -2476,6 +2489,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -2498,6 +2513,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2515,6 +2531,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/login', this.form).then(function (res) {
         localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('expires_in', moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date()).add(4, 'hours').format('MMMM Do YYYY, h:mm:ss'));
         localStorage.setItem('token_type', res.data.token_type);
         localStorage.setItem('user', res.data.user.id);
 
@@ -52110,6 +52127,14 @@ var render = function() {
       "div",
       { staticClass: "container mx-auto py-2" },
       [
+        _vm.loggedOut
+          ? _c(
+              "div",
+              { staticClass: "text-3xl text-red-500 text-bold text-center" },
+              [_vm._v("Session expired. You've been logged out.")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
         _c("router-view", {
           attrs: { isLoggedIn: _vm.isLoggedIn },
           on: { logged: _vm.checkIfLogged, user: _vm.setUser }
@@ -52144,7 +52169,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "flex flex-wrap w-full justify-center items-center pt-56" },
+    { staticClass: "flex flex-wrap w-full justify-center items-center pt-10" },
     [
       _c("div", { staticClass: "flex flex-wrap max-w-xl" }, [
         _c(
@@ -53007,7 +53032,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "flex flex-wrap w-full justify-center items-center pt-56" },
+    { staticClass: "flex flex-wrap w-full justify-center items-center pt-10" },
     [
       _c("div", { staticClass: "flex flex-wrap max-w-xl" }, [
         _vm._m(0),
@@ -53200,7 +53225,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "flex flex-wrap w-full justify-center items-center pt-56" },
+    { staticClass: "flex flex-wrap w-full justify-center items-center pt-10" },
     [
       _c("div", { staticClass: "flex flex-wrap max-w-xl" }, [
         _vm._m(0),

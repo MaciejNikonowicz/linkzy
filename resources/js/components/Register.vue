@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-wrap w-full justify-center items-center pt-56">
+    <div class="flex flex-wrap w-full justify-center items-center pt-10">
         <div class="flex flex-wrap max-w-xl">
             <div class="p-2 text-2xl text-gray-800 font-semibold"><h1>Register an account</h1></div>
             <div class="p-2 w-full">
