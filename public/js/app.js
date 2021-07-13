@@ -1950,6 +1950,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./axios */ "./resources/js/axios.js");
 //
 //
 //
@@ -1972,6 +1973,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "App",
   data: function data() {
@@ -1999,21 +2001,11 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout(e) {
       var _this = this;
 
-      var config = {
-        headers: {
-          Authorization: "Bearer ".concat(localStorage.getItem('access_token'))
-        }
-      };
-      var bodyParameters = {
-        key: ""
-      };
       e.preventDefault();
-      axios.post('/api/auth/logout', bodyParameters, config).then(function () {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('token_type');
-        localStorage.removeItem('user');
+      _axios__WEBPACK_IMPORTED_MODULE_0__.default.post('/api/auth/logout').then(function () {
         _this.isLoggedIn = false;
         _this.user = null;
+        localStorage.clear();
 
         _this.$router.push({
           name: "LoginPage"
@@ -2267,13 +2259,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     isLoggedIn: Boolean
@@ -2317,6 +2302,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../axios */ "./resources/js/axios.js");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2390,6 +2384,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2398,7 +2393,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     linkEnter: function linkEnter(id) {
-      axios.get('/api/links/' + id).then(function (res) {
+      _axios__WEBPACK_IMPORTED_MODULE_1__.default.get('/api/links/' + id).then(function (res) {
+        window.location.reload();
+      });
+    },
+    linkRestore: function linkRestore(id) {
+      _axios__WEBPACK_IMPORTED_MODULE_1__.default.post('/api/links/' + id + '/restore').then(function (res) {
+        window.location.reload();
+      });
+    },
+    linkDisable: function linkDisable(id) {
+      _axios__WEBPACK_IMPORTED_MODULE_1__.default.post('/api/links/' + id + '/disable').then(function (res) {
         window.location.reload();
       });
     },
@@ -2409,7 +2414,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/api/links').then(function (res) {
+    _axios__WEBPACK_IMPORTED_MODULE_1__.default.get('/api/links').then(function (res) {
       _this.links = res.data.filter(function (link) {
         return link.user_id == localStorage.getItem('user');
       });
@@ -2481,16 +2486,12 @@ __webpack_require__.r(__webpack_exports__);
         _this.$router.push({
           name: "DashboardPage"
         });
+
+        window.location.reload();
       })["catch"](function (error) {
+        console.log("ERRRR:: ", error.response.data);
         _this.errors = error.response.data;
       });
-    },
-    beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-      if (window.Laravel.isLoggedin) {
-        return next('DashboardPage');
-      }
-
-      next();
     }
   }
 });
@@ -2630,6 +2631,36 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_3__.default({
   },
   router: new vue_router__WEBPACK_IMPORTED_MODULE_4__.default(_routes__WEBPACK_IMPORTED_MODULE_0__.default)
 });
+
+/***/ }),
+
+/***/ "./resources/js/axios.js":
+/*!*******************************!*\
+  !*** ./resources/js/axios.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = 'http://localhost:8000/';
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common.Authorization) = "Bearer " + localStorage.getItem('access_token');
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((axios__WEBPACK_IMPORTED_MODULE_0___default())); // export default {
+//     config: {
+//         headers: { 
+//             Accept: 'application/json',
+//             Authorization: `Bearer ${localStorage.getItem('access_token')}` 
+//         }
+//     },
+//     bodyParameters: {
+//         key: ''
+//     }
+// };
 
 /***/ }),
 
@@ -51923,16 +51954,18 @@ var render = function() {
                 _c("b", [_vm._v(_vm._s(_vm.user.name))])
               ]),
               _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass:
-                    "nav-item nav-link btn bg-red-800 hover:bg-red-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow",
-                  staticStyle: { cursor: "pointer" },
-                  on: { click: _vm.logout }
-                },
-                [_vm._v("Logout")]
-              )
+              _vm.user
+                ? _c(
+                    "a",
+                    {
+                      staticClass:
+                        "nav-item nav-link btn bg-red-800 hover:bg-red-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow",
+                      staticStyle: { cursor: "pointer" },
+                      on: { click: _vm.logout }
+                    },
+                    [_vm._v("Logout")]
+                  )
+                : _vm._e()
             ])
           : _c(
               "div",
@@ -52304,20 +52337,6 @@ var render = function() {
                       _c(
                         "th",
                         {
-                          staticClass:
-                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-                          attrs: { scope: "col" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    Is Valid?\n                "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "th",
-                        {
                           staticClass: "relative px-6 py-5",
                           attrs: { scope: "col" }
                         },
@@ -52405,21 +52424,6 @@ var render = function() {
                                     "\n                        "
                                 )
                               ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          {
-                            staticClass:
-                              "px-6 py-5 whitespace-nowrap text-sm text-gray-500"
-                          },
-                          [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(stat.is_valid ? "Yes" : "No") +
-                                "\n                    "
                             )
                           ]
                         )
@@ -52560,6 +52564,20 @@ var render = function() {
                       _c(
                         "th",
                         {
+                          staticClass:
+                            "px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                          attrs: { scope: "col" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Is Valid?\n                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
                           staticClass: "relative px-6 py-5",
                           attrs: { scope: "col" }
                         },
@@ -52583,149 +52601,200 @@ var render = function() {
                     "tbody",
                     { staticClass: "bg-white divide-y divide-gray-200" },
                     _vm._l(_vm.links, function(link) {
-                      return _c("tr", { key: link.id }, [
-                        _c(
-                          "td",
-                          { staticClass: "px-6 py-5 whitespace-nowrap" },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "text-sm text-gray-500" },
-                              [_vm._v(_vm._s(link.id))]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "px-6 py-5 whitespace-nowrap" },
-                          [
-                            _c("div", { staticClass: "flex items-center" }, [
-                              _c("div", { staticClass: "ml-4" }, [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "text-sm font-medium text-gray-900 couponcode"
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                    " +
-                                        _vm._s(
-                                          link.original_link.substring(0, 50)
-                                        ) +
-                                        "....\n                                    "
-                                    ),
-                                    _c(
-                                      "span",
-                                      { staticClass: "coupontooltip" },
-                                      [_vm._v(_vm._s(link.original_link))]
-                                    )
-                                  ]
-                                )
-                              ])
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "px-6 py-5 whitespace-nowrap" },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "text-sm text-gray-500" },
-                              [_vm._v(_vm._s(link.slug))]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "px-6 py-5 whitespace-nowrap" },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "text-sm text-gray-500" },
-                              [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "text-blue-500 hover:text-red-500",
-                                    attrs: {
-                                      href: link.short_link,
-                                      target: "_blank"
+                      return _c(
+                        "tr",
+                        {
+                          key: link.id,
+                          class: link.is_valid ? "" : "bg-red-400"
+                        },
+                        [
+                          _c(
+                            "td",
+                            { staticClass: "px-6 py-5 whitespace-nowrap" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "text-sm text-gray-500" },
+                                [_vm._v(_vm._s(link.id))]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "px-6 py-5 whitespace-nowrap" },
+                            [
+                              _c("div", { staticClass: "flex items-center" }, [
+                                _c("div", { staticClass: "ml-4" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "text-sm font-medium text-gray-900 couponcode"
                                     },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.linkEnter(link.id)
+                                    [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(
+                                            link.original_link.substring(0, 50)
+                                          ) +
+                                          "....\n                                    "
+                                      ),
+                                      _c(
+                                        "span",
+                                        { staticClass: "coupontooltip" },
+                                        [_vm._v(_vm._s(link.original_link))]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "px-6 py-5 whitespace-nowrap" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "text-sm text-gray-500" },
+                                [_vm._v(_vm._s(link.slug))]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "px-6 py-5 whitespace-nowrap" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "text-sm text-gray-500" },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "text-blue-500 hover:text-red-500",
+                                      attrs: {
+                                        href: link.short_link,
+                                        target: "_blank"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.linkEnter(link.id)
+                                        }
                                       }
+                                    },
+                                    [_vm._v(_vm._s(link.short_link))]
+                                  )
+                                ]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass:
+                                "px-6 py-5 whitespace-nowrap text-sm text-gray-500"
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(link.visits_counter) +
+                                  "\n                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass:
+                                "px-6 py-5 whitespace-nowrap text-sm text-gray-500"
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(_vm.timeFormat(link.created_at)) +
+                                  "\n                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass:
+                                "px-6 py-5 whitespace-nowrap text-sm text-gray-500"
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(link.is_valid ? "Yes" : "No") +
+                                  " "
+                              ),
+                              _c("br"),
+                              _vm._v(" "),
+                              !link.is_valid
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "text-blue-500 font-bold cursor-pointer",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.linkRestore(link.id)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Restore")]
+                                  )
+                                : _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "text-red-500 font-bold cursor-pointer",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.linkDisable(link.id)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Disable")]
+                                  )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass:
+                                "px-6 py-5 whitespace-nowrap text-sm text-gray-500"
+                            },
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass:
+                                    "btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full",
+                                  attrs: {
+                                    to: {
+                                      name: "LinkStatisticsPage",
+                                      params: { id: link.id },
+                                      props: { test: "test" }
                                     }
-                                  },
-                                  [_vm._v(_vm._s(link.short_link))]
-                                )
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          {
-                            staticClass:
-                              "px-6 py-5 whitespace-nowrap text-sm text-gray-500"
-                          },
-                          [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(link.visits_counter) +
-                                "\n                    "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          {
-                            staticClass:
-                              "px-6 py-5 whitespace-nowrap text-sm text-gray-500"
-                          },
-                          [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(_vm.timeFormat(link.created_at)) +
-                                "\n                    "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          {
-                            staticClass:
-                              "px-6 py-5 whitespace-nowrap text-sm text-gray-500"
-                          },
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass:
-                                  "btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full",
-                                attrs: {
-                                  to: {
-                                    name: "LinkStatisticsPage",
-                                    params: { id: link.id },
-                                    props: { test: "test" }
                                   }
-                                }
-                              },
-                              [_vm._v("Statistics")]
-                            )
-                          ],
-                          1
-                        )
-                      ])
+                                },
+                                [_vm._v("Statistics")]
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      )
                     }),
                     0
                   )

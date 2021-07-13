@@ -18,10 +18,6 @@
                     <th scope="col" class="px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Visit Referer
                     </th>
-
-                    <th scope="col" class="px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Is Valid?
-                    </th>
                     <th scope="col" class="relative px-6 py-5">
                         <router-link :to="{name: 'DashboardPage'}" class="btn bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">Back</router-link>
                     </th>
@@ -48,9 +44,6 @@
                             <div class="text-sm text-gray-500">
                                 {{stat.visit_referer}}
                             </div>
-                        </td>
-                        <td class="px-6 py-5 whitespace-nowrap text-sm text-gray-500">
-                            {{stat.is_valid ? 'Yes' : 'No'}}
                         </td>
                     </tr>
                 </tbody>

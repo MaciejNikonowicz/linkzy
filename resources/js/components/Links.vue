@@ -24,13 +24,16 @@
                     <th scope="col" class="px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Created At
                     </th>
+                    <th scope="col" class="px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Is Valid?
+                    </th>
                     <th scope="col" class="relative px-6 py-5">
                         <router-link :to="{name: 'AddLinkPage'}" class="btn bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">Add New</router-link>
                     </th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    <tr v-for="link in links" :key="link.id">
+                    <tr v-for="link in links" :key="link.id" :class="link.is_valid ? '' : 'bg-red-400'">
                         <td class="px-6 py-5 whitespace-nowrap">
                             <div class="text-sm text-gray-500">{{link.id}}</div>
                         </td>
@@ -58,6 +61,11 @@
                         <td class="px-6 py-5 whitespace-nowrap text-sm text-gray-500">
                             {{timeFormat(link.created_at)}}
                         </td>
+                        <td class="px-6 py-5 whitespace-nowrap text-sm text-gray-500">
+                            {{link.is_valid ? 'Yes' : 'No'  }} <br>
+                            <span v-if="!link.is_valid" class="text-blue-500 font-bold cursor-pointer" @click="linkRestore(link.id)">Restore</span>
+                            <span v-else class="text-red-500 font-bold cursor-pointer" @click="linkDisable(link.id)">Disable</span>
+                        </td>
                          <td class="px-6 py-5 whitespace-nowrap text-sm text-gray-500">
                             <router-link :to="{name: 'LinkStatisticsPage', params: {id: link.id}, props: {test:'test'}}" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Statistics</router-link>
                         </td>
@@ -72,6 +80,7 @@
 
 <script>
 import moment from 'moment';
+import axios from '../axios';
 
 export default {
     data() {
@@ -82,6 +91,16 @@ export default {
     methods: {
         linkEnter(id) {
             axios.get('/api/links/' + id).then((res) => {
+                window.location.reload();
+            })
+        },
+        linkRestore(id) {
+            axios.post('/api/links/' + id + '/restore').then((res) =>{
+                window.location.reload();
+            })
+        },
+        linkDisable(id) {
+            axios.post('/api/links/' + id + '/disable').then((res) =>{
                 window.location.reload();
             })
         },

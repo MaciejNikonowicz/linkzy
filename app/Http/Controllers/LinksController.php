@@ -6,9 +6,7 @@ use App\Http\Requests\LinkRequest;
 use App\Http\Resources\LinkResource;
 use App\Http\Resources\LinkStatisticsResource;
 use App\Models\Link;
-use App\Models\LinkStatistics;
 use Carbon\Carbon;
-use Hashids\Hashids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -100,25 +98,32 @@ class LinksController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Restore not valid link
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Link  $link
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function restore(Link $link)
     {
-        //
+        if($link) {
+            $link->update([
+                'is_valid' => true
+            ]);
+        }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Disable a link that is valid
      *
-     * @param  int  $id
+     * @param  Link  $link
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function disable(Link $link)
     {
-        //
+        if($link) {
+            $link->update([
+                'is_valid' => false
+            ]);
+        }
     }
 }

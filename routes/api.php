@@ -38,6 +38,8 @@ Route::group([
     'middleware' => 'api',
 ], function($router) {
     Route::apiResource('/links', LinksController::class);
+    Route::post('/links/{link}/restore', [LinksController::class, 'restore']);
+    Route::post('/links/{link}/disable', [LinksController::class, 'disable']);
     Route::get('/links/{link_id}/statistics', [LinkStatisticsController::class, 'show'] );
 });
 

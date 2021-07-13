@@ -7,7 +7,7 @@
             </div>
             <div class="flex mx-auto" v-if="isLoggedIn">
                 <p class="mr-5 text-2xl">Logged as: <b>{{ user.name }}</b></p>
-                <a class="nav-item nav-link btn bg-red-800 hover:bg-red-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow" style="cursor: pointer;" @click="logout">Logout</a>
+                <a v-if="user" class="nav-item nav-link btn bg-red-800 hover:bg-red-300 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow" style="cursor: pointer;" @click="logout">Logout</a>
             </div>
             <div class="flex mx-auto" v-else>
                 <router-link class="mr-4" :to="{name: 'LoginPage'}" exact>Login</router-link>
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import axios from './axios';
+
 export default {
     name: "App",
     data() {
@@ -46,19 +48,11 @@ export default {
             this.user = value;
         },
         logout(e) {
-            const config = {
-                headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
-            };
-            const bodyParameters = {
-                key: ""
-            };
             e.preventDefault()
-            axios.post('/api/auth/logout', bodyParameters, config).then(()=>{
-                localStorage.removeItem('access_token');
-                localStorage.removeItem('token_type');
-                localStorage.removeItem('user');
+            axios.post('/api/auth/logout').then(()=>{
                 this.isLoggedIn = false;
                 this.user = null;
+                localStorage.clear();
                 this.$router.push({ name: "LoginPage"})
             }).catch((error) =>{
                  console.log("ERRRR:: ",error.response.data);

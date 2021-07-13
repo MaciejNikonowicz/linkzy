@@ -42,16 +42,12 @@ export default {
                 this.$emit('logged', true);
                 this.$emit('user', res.data.user);
                 this.$router.push({ name: "DashboardPage"}); 
+                window.location.reload();
              }).catch((error) =>{
+                 console.log("ERRRR:: ",error.response.data);
                 this.errors = error.response.data;
             })
-         },
-         beforeRouteEnter(to, from, next) {
-            if (window.Laravel.isLoggedin) {
-                return next('DashboardPage');
-            }
-            next();
-        }
+         }
     }
 }
 </script>
