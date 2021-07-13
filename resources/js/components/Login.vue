@@ -43,7 +43,7 @@ export default {
                 this.$emit('user', res.data.user);
                 this.$router.push({ name: "DashboardPage"}); 
                 window.location.reload();
-             }).catch((error) =>{
+            }).catch((error) =>{
                  console.log("ERRRR:: ",error.response.data);
                 this.errors = error.response.data;
             })

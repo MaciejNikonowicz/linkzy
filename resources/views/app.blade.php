@@ -22,6 +22,13 @@
         ]) !!}
     </script>
 @endif
+@if(Session::get('message'))
+    <script>
+        window.Session = {!! json_encode([
+            'message' => Session::get('message')
+        ]) !!}
+    </script>
+@endif
 <div id="app">
     <app></app>
 </div>

@@ -15,13 +15,15 @@ class RedirectsController extends Controller
         if ($link->expiration_date < Carbon::now()->format('Y-m-d H:i:m')) {
             if (!$link->user_id) {
                 $link->delete();
-                return redirect('/404')->with('message', 'Link does not exist anymore');
+                return redirect('/link-expired')->with('message', 'This link does not exist anymore');
             } else {
                 $link->update([
                     'is_valid' => false,
                 ]);
-                return redirect('/404')->with('message', 'Link expired');
+                return redirect('/link-expired')->with('message', 'This link has expired');
             }
+        } elseif (!$link->is_valid) {
+            return redirect('/link-expired')->with('message', 'This link has expired');
         } else {
             $link_statistics = $link->statistics()->create([
                 'link_id' => $link->id,

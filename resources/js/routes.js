@@ -5,6 +5,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import AddLink from './components/AddLink';
 import LinkStatistics from './components/LinkStatistics';
+import LinkExpired from './components/LinkExpired';
 
 export default {
     mode: 'history',
@@ -14,6 +15,11 @@ export default {
             path: '*',
             name: 'NotFound',
             component: NotFound,
+        },
+        {
+            path: '/link-expired',
+            name: 'LinkExpired',
+            component: LinkExpired,
         },
         {
             path: '/',
