@@ -1981,9 +1981,12 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    if (window.Laravel.isLoggedin) {
+    if (window.Laravel.isLoggedin && localStorage.getItem('access_token')) {
       this.isLoggedIn = true;
       this.user = window.Laravel.user;
+    } else {
+      this.isLoggedIn = false;
+      this.user = null;
     }
   },
   methods: {
@@ -51898,7 +51901,7 @@ var render = function() {
                     staticClass: "mr-4",
                     attrs: { to: { name: "HomePage" }, exact: "" }
                   },
-                  [_vm._v("Home " + _vm._s(_vm.isLoggedIn))]
+                  [_vm._v("Home")]
                 )
               : _c(
                   "router-link",
