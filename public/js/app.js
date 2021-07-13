@@ -2064,6 +2064,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     isLoggedIn: Boolean
@@ -52019,6 +52020,12 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "p-2 w-full" }, [
           _c("label", { attrs: { for: "original_link" } }, [_vm._v("URL")]),
+          _vm._v(" "),
+          _vm.errors.original_link
+            ? _c("span", { staticClass: "w-full text-red-500" }, [
+                _vm._v("An original link is required")
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [

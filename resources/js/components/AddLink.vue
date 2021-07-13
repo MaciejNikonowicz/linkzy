@@ -7,6 +7,7 @@
             <div class="p-2 text-2xl text-gray-800 font-semibold"><h1>Shorten Link</h1></div>
             <div class="p-2 w-full">
                 <label for="original_link">URL</label>
+                <span class="w-full text-red-500" v-if="errors.original_link">An original link is required</span>
                 <input class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2" placeholder="Original Link" type="url" v-model="form.original_link">
             </div>
             <div class="p-2 w-full">
@@ -56,7 +57,7 @@ export default {
                     this.short_link = res.data.data.attributes.short_link
                 }
              }).catch((error) =>{
-                 console.log("ERRRR:: ",error.response.data);
+                console.log("ERRRR:: ",error.response.data);
                 this.errors = error.response.data.errors;
             })
          }
