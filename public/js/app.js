@@ -2530,8 +2530,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/login', this.form).then(function (res) {
+        console.log(res);
         localStorage.setItem('access_token', res.data.access_token);
-        localStorage.setItem('expires_in', moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date()).add(4, 'hours').format('MMMM Do YYYY, h:mm:ss'));
+        localStorage.setItem('expires_in', moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date()).add(res.data.expires_in, 'seconds').format('MMMM Do YYYY, h:mm:ss'));
         localStorage.setItem('token_type', res.data.token_type);
         localStorage.setItem('user', res.data.user.id);
 
@@ -2541,9 +2542,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$router.push({
           name: "DashboardPage"
-        });
+        }); // window.location.reload();
 
-        window.location.reload();
       })["catch"](function (error) {
         console.log("ERRRR:: ", error.response.data);
         _this.errors = error.response.data;
